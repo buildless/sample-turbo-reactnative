@@ -1,0 +1,42 @@
+---
+name: "CI"
+
+"on":
+    ## Run on push
+    push:
+        paths:
+            - apps/**/*.*
+            - packages/**/*.*
+            - pnpm-lock.yaml
+            - package.json
+            - .github/workflows/*.yml
+
+concurrency:
+    # Cancel previous actions from the same PR: https://stackoverflow.com/a/72408109
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+  build:
+    name: "Build: ${{ matrix.label }}"
+    uses: ./.github/workflows/module.build.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest]
+        label: ["Ubuntu"]
+        include:
+          - runner: ubuntu-latest
+            label: Ubuntu
+          - runner: macos-latest
+            label: macOS
+          - runner: windows-2022
+            label: Windows
+
+    secrets: inherit
+    with:
+      runner: ${{ matrix.runner }}
+      label: ${{ matrix.label }}

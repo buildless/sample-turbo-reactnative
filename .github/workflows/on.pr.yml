@@ -1,0 +1,61 @@
+---
+name: "PR"
+
+"on":
+    ## Run on PR filings
+    pull_request:
+        paths:
+            - apps/**/*.*
+            - packages/**/*.*
+            - pnpm-lock.yaml
+            - package.json
+            - .github/workflows/*.yml
+
+    ## Run on PR queue check requests
+    merge_group: {}
+
+concurrency:
+    # Cancel previous actions from the same PR: https://stackoverflow.com/a/72408109
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+  dependency-review:
+    name: "Dependency Review"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+      - name: "Checkout Repository"
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      - name: "Dependency Review"
+        uses: actions/dependency-review-action@f6fff72a3217f580d5afd49a46826795305b63c7 # v3.0.8
+        with:
+          config-file: "./.github/dependency-review-config.yml"
+
+  test:
+    name: "Tests: ${{ matrix.label }}"
+    uses: ./.github/workflows/module.build.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest]
+        label: ["Ubuntu"]
+        include:
+          # Bazel 7
+          - runner: ubuntu-latest
+            label: Ubuntu
+          - runner: macos-latest
+            label: macOS
+          - runner: windows-2022
+            label: Windows
+
+    secrets: inherit
+    with:
+      runner: ${{ matrix.runner }}
+      label: ${{ matrix.label }}

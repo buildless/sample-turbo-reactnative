@@ -1,0 +1,199 @@
+---
+name: "Build"
+
+"on":
+  workflow_dispatch:
+    inputs:
+      ## Runner to use
+      runner:
+        description: "Runner"
+        type: string
+        default: "ubuntu-latest"
+
+      ## Whether to build native targets
+      native:
+        description: "Native"
+        type: boolean
+        default: true
+
+      ## Whether to build iOS targets
+      ios:
+        description: "iOS"
+        type: boolean
+        default: true
+
+  workflow_call:
+    inputs:
+      runner:
+        description: "Runner"
+        type: string
+        default: "ubuntu-latest"
+      label:
+        description: "Label"
+        type: string
+        default: "Ubuntu"
+      native:
+        description: "Native"
+        type: boolean
+        default: true
+      ios:
+        description: "iOS"
+        type: boolean
+        default: true
+
+    secrets:
+      ## Secrets: Buildless API key
+      BUILDLESS_APIKEY:
+        required: false
+
+env:
+  BUILDLESS_APIKEY: ${{ secrets.BUILDLESS_APIKEY }}
+  PNPM_VERSION: ${{ vars.PNPM_VERSION || '8.7.5' }}
+  NODE_VERSION: ${{ vars.NODE_VERSION || '20.2.0' }}
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+      - name: "Setup: Checkout"
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+            fetch-depth: 0
+      - name: "Setup: PNPM"
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: "Setup: Node"
+        uses: buildjet/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: "Setup: Install Packages (Frozen)"
+        run: pnpm install --frozen-lockfile
+        if: |
+          (
+            github.event_name != 'pull_request' || (
+            !contains(github.ref, 'deps/') &&
+            !contains(github.ref, 'dependabot/') &&
+            !contains(github.ref, 'renovate/') &&
+            !contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+            !contains(github.event.head_commit.message, 'ci:unlock-deps')
+          ))
+      - name: "Setup: Install Packages (Update)"
+        run: pnpm install --no-frozen-lockfile
+        if: |
+          (
+            github.event_name == 'pull_request' && contains(github.ref, 'deps/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'dependabot/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'renovate/') ||
+            github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') ||
+            contains(github.event.head_commit.message, 'ci:unlock-deps')
+          )
+      - name: "Build: Web"
+        shell: bash
+        env:
+          CI: true
+        run: pnpm run build
+
+  build-ios:
+    name: "Build: iOS"
+    if: inputs.ios && inputs.native
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+      - name: "Setup: Checkout"
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+            fetch-depth: 0
+      - name: "Setup: PNPM"
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: "Setup: Node"
+        uses: buildjet/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: "Setup: Install Packages (Frozen)"
+        run: pnpm install --frozen-lockfile
+        if: |
+          (
+            github.event_name != 'pull_request' || (
+            !contains(github.ref, 'deps/') &&
+            !contains(github.ref, 'dependabot/') &&
+            !contains(github.ref, 'renovate/') &&
+            !contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+            !contains(github.event.head_commit.message, 'ci:unlock-deps')
+          ))
+      - name: "Setup: Install Packages (Update)"
+        run: pnpm install --no-frozen-lockfile
+        if: |
+          (
+            github.event_name == 'pull_request' && contains(github.ref, 'deps/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'dependabot/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'renovate/') ||
+            github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') ||
+            contains(github.event.head_commit.message, 'ci:unlock-deps')
+          )
+      - name: "Build: iOS"
+        shell: bash
+        env:
+          CI: true
+        run: pnpm run build:ios
+
+  build-android:
+    name: "Build: Android"
+    if: inputs.native
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+      - name: "Setup: Checkout"
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        with:
+            fetch-depth: 0
+      - name: "Setup: PNPM"
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - name: "Setup: Node"
+        uses: buildjet/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+      - name: "Setup: Install Packages (Frozen)"
+        run: pnpm install --frozen-lockfile
+        if: |
+          (
+            github.event_name != 'pull_request' || (
+            !contains(github.ref, 'deps/') &&
+            !contains(github.ref, 'dependabot/') &&
+            !contains(github.ref, 'renovate/') &&
+            !contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+            !contains(github.event.head_commit.message, 'ci:unlock-deps')
+          ))
+      - name: "Setup: Install Packages (Update)"
+        run: pnpm install --no-frozen-lockfile
+        if: |
+          (
+            github.event_name == 'pull_request' && contains(github.ref, 'deps/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'dependabot/') ||
+            github.event_name == 'pull_request' && contains(github.ref, 'renovate/') ||
+            github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') ||
+            contains(github.event.head_commit.message, 'ci:unlock-deps')
+          )
+      - name: "Build: Android"
+        shell: bash
+        env:
+          CI: true
+        run: pnpm run build:android
