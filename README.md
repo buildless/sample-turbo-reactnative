@@ -27,8 +27,9 @@ Together, these tools provide a unified cross-platform development environment, 
 
 1) Clone the sample, install dependencies with `pnpm i`
 2) Run a build with `pnpm run build`; observe that Turbo uses Buildless
-3) Set up [`sccache`][4], and [link it to your Swift toolchain][5]
-4) Enjoy lightning-fast builds on all platforms
+3) Set up [`sccache`][4], and [link it to your Swift toolchain][5], configure [caching with Redis][14]
+
+That's it! Enjoy lightning-fast builds on all platforms 🔥
 
 
 ### Building and running each app
@@ -108,3 +109,4 @@ This Turborepo has some additional tools already setup for you:
 [11]: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions
 [12]: https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-an-organization
 [13]: https://asciinema.org/a/608260
+[14]: https://docs.less.build/docs/redis
