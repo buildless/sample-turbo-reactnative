@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       prettier:
-        specifier: latest
+        specifier: 3.0.3
         version: registry.npmjs.org/prettier@3.0.3
       turbo:
         specifier: latest

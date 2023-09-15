@@ -1,13 +1,20 @@
 {
   "private": true,
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev --api='https://turbo.less.build' --token=$BUILDLESS_APIKEY --remote-only=true --no-daemon",
     "build": "turbo build --api='https://turbo.less.build' --token=$BUILDLESS_APIKEY --remote-only=true --no-daemon",
     "clean": "turbo clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore",
+    "start:native": "cd apps/native && pnpm run start",
+    "android": "pnpm run native:android",
+    "ios": "pnpm run native:ios",
+    "native:android": "cd apps/native && pnpm run android",
+    "native:ios": "cd apps/native && pnpm run ios",
+    "native:web": "cd apps/native && pnpm run web",
+    "native:dev": "cd apps/native && pnpm run dev"
   },
   "devDependencies": {
-    "prettier": "latest",
+    "prettier": "3.0.3",
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.7.5"
