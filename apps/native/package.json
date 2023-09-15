@@ -17,7 +17,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.68.2",
     "react-native-web": "^0.18.9",
-    "ui": "*"
+    "ui": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
