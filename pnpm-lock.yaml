@@ -80,8 +80,8 @@ importers:
         specifier: ^18.2.4
         version: registry.npmjs.org/@types/react-dom@18.2.7
       babel-plugin-react-native-web:
-        specifier: ^0.18.4
-        version: registry.npmjs.org/babel-plugin-react-native-web@0.18.12
+        specifier: ^0.19.8
+        version: registry.npmjs.org/babel-plugin-react-native-web@0.19.8
       eslint:
         specifier: ^8.19.0
         version: registry.npmjs.org/eslint@8.49.0
@@ -3809,10 +3809,10 @@ packages:
     version: 0.17.7
     dev: false
 
-  registry.npmjs.org/babel-plugin-react-native-web@0.18.12:
-    resolution: {integrity: sha512-4djr9G6fMdwQoD6LQ7hOKAm39+y12flWgovAqS1k5O8f42YQ3A1FFMyV5kKfetZuGhZO5BmNmOdRRZQ1TixtDw==, registry: https://npm.pkg.st/, tarball: https://registry.npmjs.org/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.18.12.tgz}
+  registry.npmjs.org/babel-plugin-react-native-web@0.19.8:
+    resolution: {integrity: sha512-EnxczF63HfVwm4ZrNifEhKRXeHDlzXwCgzmoW8v0Ch81vWXHJogIetVY0MRwg1D63rO0T5Vzz2n+ERgjPd4ULw==, registry: https://npm.pkg.st/, tarball: https://registry.npmjs.org/babel-plugin-react-native-web/-/babel-plugin-react-native-web-0.19.8.tgz}
     name: babel-plugin-react-native-web
-    version: 0.18.12
+    version: 0.19.8
     dev: true
 
   registry.npmjs.org/babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0:
