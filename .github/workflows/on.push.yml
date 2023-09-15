@@ -40,3 +40,5 @@ jobs:
     with:
       runner: ${{ matrix.runner }}
       label: ${{ matrix.label }}
+      native: false
+      ios: false
