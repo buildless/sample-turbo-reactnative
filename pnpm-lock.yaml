@@ -49,8 +49,8 @@ importers:
         specifier: ^0.69.15
         version: registry.npmjs.org/@types/react-native@0.69.21
       typescript:
-        specifier: ^4.7.4
-        version: registry.npmjs.org/typescript@4.9.5
+        specifier: ^5.0.0
+        version: registry.npmjs.org/typescript@5.2.2
 
   apps/web:
     dependencies:
@@ -89,8 +89,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tsconfig
       typescript:
-        specifier: ^4.7.4
-        version: registry.npmjs.org/typescript@4.9.5
+        specifier: ^5.0.0
+        version: registry.npmjs.org/typescript@5.2.2
 
   packages/tsconfig: {}
 
@@ -114,10 +114,10 @@ importers:
         version: link:../tsconfig
       tsup:
         specifier: ^6.0.1
-        version: registry.npmjs.org/tsup@6.7.0(typescript@4.9.5)
+        version: registry.npmjs.org/tsup@6.7.0(typescript@5.2.2)
       typescript:
-        specifier: ^4.7.4
-        version: registry.npmjs.org/typescript@4.9.5
+        specifier: ^5.0.0
+        version: registry.npmjs.org/typescript@5.2.2
 
 packages:
 
@@ -10251,7 +10251,7 @@ packages:
     version: 2.6.2
     dev: false
 
-  registry.npmjs.org/tsup@6.7.0(typescript@4.9.5):
+  registry.npmjs.org/tsup@6.7.0(typescript@5.2.2):
     resolution: {integrity: sha512-L3o8hGkaHnu5TdJns+mCqFsDBo83bJ44rlK7e6VdanIvpea4ArPcU3swWGsLVbXak1PqQx/V+SSmFPujBK+zEQ==, registry: https://npm.pkg.st/, tarball: https://registry.npmjs.org/tsup/-/tsup-6.7.0.tgz}
     id: registry.npmjs.org/tsup/6.7.0
     name: tsup
@@ -10284,7 +10284,7 @@ packages:
       source-map: registry.npmjs.org/source-map@0.8.0-beta.0
       sucrase: registry.npmjs.org/sucrase@3.34.0
       tree-kill: registry.npmjs.org/tree-kill@1.2.2
-      typescript: registry.npmjs.org/typescript@4.9.5
+      typescript: registry.npmjs.org/typescript@5.2.2
     transitivePeerDependencies:
       - supports-color
       - ts-node
@@ -10425,11 +10425,11 @@ packages:
       mime-types: registry.npmjs.org/mime-types@2.1.35
     dev: false
 
-  registry.npmjs.org/typescript@4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==, registry: https://npm.pkg.st/, tarball: https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz}
+  registry.npmjs.org/typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==, registry: https://npm.pkg.st/, tarball: https://registry.npmjs.org/typescript/-/typescript-5.2.2.tgz}
     name: typescript
-    version: 4.9.5
-    engines: {node: '>=4.2.0'}
+    version: 5.2.2
+    engines: {node: '>=14.17'}
     hasBin: true
     dev: true
 
