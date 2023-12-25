@@ -19,7 +19,7 @@
     "@types/node": "^18.11.5",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.4",
-    "babel-plugin-react-native-web": "^0.18.4",
+    "babel-plugin-react-native-web": "^0.19.10",
     "eslint": "^8.19.0",
     "tsconfig": "workspace:*",
     "typescript": "^4.7.4"
