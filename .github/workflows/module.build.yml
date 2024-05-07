@@ -65,7 +65,7 @@ jobs:
         with:
             fetch-depth: 0
       - name: "Setup: PNPM"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
       - name: "Setup: Node"
@@ -114,7 +114,7 @@ jobs:
         with:
             fetch-depth: 0
       - name: "Setup: PNPM"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
       - name: "Setup: Node"
@@ -163,7 +163,7 @@ jobs:
         with:
             fetch-depth: 0
       - name: "Setup: PNPM"
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
           version: ${{ env.PNPM_VERSION }}
       - name: "Setup: Node"
