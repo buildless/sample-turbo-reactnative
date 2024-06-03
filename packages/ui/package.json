@@ -12,7 +12,7 @@
     "@types/react": "^18.0.22",
     "@types/react-native": "^0.69.15",
     "tsconfig": "workspace:*",
-    "tsup": "^6.0.1",
+    "tsup": "^8.1.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
